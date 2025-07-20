@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> head}}  {{!-- chỉ lấy thư viện head từ main --}}
+  </head>
+  <!--begin::Body-->
+   <body  id="kt_body"  class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center" > 
+      <!--begin::Root-->
+      <div class="d-flex flex-column flex-root" id="kt_app_root">
+         <!--begin::Page bg image-->
+         <style>
+            body {
+            background-image: url('https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/bg10.jpeg');
+            }
+            [data-bs-theme="dark"] body {
+            background-image: url('https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/bg10-dark.jpeg');
+            }
+         </style>
+         <!--end::Page bg image-->
+         <!--begin::Authentication - Sign-up -->
+         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div class="d-flex flex-lg-row-fluid">
+               <!--begin::Content-->
+               <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
+                  <!--begin::Image-->                
+                  <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/agency.png" alt=""/>    
+                  <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/agency-dark.png" alt=""/>                 
+                  <!--end::Image-->
+                  <!--begin::Title-->
+                  <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7"> 
+                     Fast, Efficient and Productive
+                  </h1>
+                  <!--end::Title-->
+                  <!--begin::Text-->
+                  <div class="text-gray-600 fs-base text-center fw-semibold">
+                     In this kind of post, <a href="#" class="opacity-75-hover text-primary me-1">the blogger</a> 
+                     introduces a person they’ve interviewed <br/> and provides some background information about 
+                     <a href="#" class="opacity-75-hover text-primary me-1">the interviewee</a> 
+                     and their <br/> work following this is a transcript of the interview.  
+                  </div>
+                  <!--end::Text-->
+               </div>
+               <!--end::Content-->
+            </div>
+            <!--begin::Aside-->
+            <!--begin::Body-->
+            <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
+               <!--begin::Wrapper-->
+               <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+                  <!--begin::Content-->
+                  <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-400px">
+                     <!--begin::Wrapper-->
+                     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
+                        <!--begin::Login with ... --> 
+                        <div class="text-center mb-10">
+                           <h1 class="text-gray-900 fw-bolder mb-3">Sign Up</h1>
+                           <div class="text-gray-500 fw-semibold fs-6">
+                              Dungbios Commerce Platform
+                           </div>
+                        </div>  
+
+                        <!--begin::Local Login Form-->
+                        <form class="form w-100" id="form_register_local" method="POST" action="">
+                           <!-- Email -->
+                           <div class="form-floating fv-row mb-8">
+                              <input type="email" class="form-control bg-transparent" name="email" id="floatingEmail" placeholder="Email" required autocomplete="off" />
+                              <label for="floatingEmail" class="text-muted fw-bold">Enter your email</label>
+                           </div>
+
+                           <!-- Username -->
+                           <div class="form-floating fv-row mb-8">
+                              <input type="text" class="form-control bg-transparent" name="username" id="floatingUsername" placeholder="Username" required autocomplete="off" />
+                              <label for="floatingUsername" class="text-muted fw-bold">Enter your username</label>
+                           </div>
+
+                           <!-- Gender -->
+                           <div class="fv-row mb-8">
+                              <select id="gender" name="gender" class="form-select" required>
+                                 <option value="" disabled selected>-- Select gender --</option>
+                                 <option value="male">Male</option>
+                                 <option value="female">Female</option>
+                                 <option value="other">Other</option>
+                              </select>
+                           </div>
+
+                           <!-- Password -->
+                           <div class="fv-row mb-8" data-kt-password-meter="true">
+                              <div class="position-relative mb-3">
+                                 <input class="form-control bg-transparent" type="password" name="password" placeholder="Enter your password" required autocomplete="off" />
+                                 <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                    <i class="ki-outline ki-eye fs-2"></i>
+                                    <i class="ki-outline ki-eye-slash fs-2 d-none"></i>
+                                 </span>
+                              </div>
+                              <div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
+                                 <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                 <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                 <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+                                 <div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+                              </div>
+                              <div class="text-muted">Use 8 or more characters with a mix of letters, numbers & symbols.</div>
+                           </div>
+
+                           <!-- Confirm Password -->
+                           <div class="fv-row mb-8">
+                              <div class="position-relative mb-3">
+                                 <input class="form-control bg-transparent" type="password" name="confirmPassword" placeholder="Repeat your password" required autocomplete="off" />
+                                 <span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+                                    <i class="ki-outline ki-eye-slash fs-2"></i>
+                                    <i class="ki-outline ki-eye fs-2 d-none"></i>
+                                 </span>
+                              </div>
+                           </div>
+
+                           <!-- Accept Terms -->
+                           <div class="fv-row mb-8">
+                              <label class="form-check form-check-inline">
+                                 <input id="accept_terms" class="form-check-input" type="checkbox" value="1" />
+                                 <span class="form-check-label fw-semibold text-gray-700 fs-base ms-1">
+                                    I Accept the <a href="#" class="ms-1 link-primary">Terms</a>
+                                 </span>
+                              </label>
+                           </div>
+
+                           <!-- Submit Button -->
+                           <div class="d-grid mb-10">
+                              <button type="submit" id="kt_register_signin_link" class="btn btn-primary">
+                                 <span class="indicator-label">Sign up</span>
+                                 <span class="indicator-progress">Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                              </button>
+                           </div>
+                        </form>
+                        <!--end::Local Login Form-->
+
+
+                        <script>
+                           document.addEventListener("DOMContentLoaded", function () {
+                              const form = document.getElementById("form_register_local");
+
+                              form.addEventListener("submit", async function (e) {
+                                 e.preventDefault();
+
+                                 const email = form.email.value.trim();
+                                 const username = form.username.value.trim();
+                                 const gender = form.gender.value;
+                                 const password = form.password.value;
+                                 const confirmPassword = form.confirmPassword.value;
+                                 const acceptTerms = document.getElementById("accept_terms");
+
+                                 // Validate đầu vào
+                                 if (!email || !username || !gender || !password || !confirmPassword) {
+                                    return Swal.fire({
+                                       icon: 'warning',
+                                       title: 'Thiếu thông tin',
+                                       text: 'Vui lòng điền đầy đủ tất cả các trường.'
+                                    });
+                                 }
+
+                                 if (password !== confirmPassword) {
+                                    return Swal.fire({
+                                       icon: 'error',
+                                       title: 'Mật khẩu không khớp',
+                                       text: 'Vui lòng nhập lại mật khẩu cho khớp.'
+                                    });
+                                 }
+
+                                 if (!acceptTerms.checked) {
+                                    return Swal.fire({
+                                       icon: 'warning',
+                                       title: 'Chấp nhận điều khoản',
+                                       text: 'Bạn phải đồng ý với điều khoản trước khi đăng ký.'
+                                    });
+                                 }
+
+                                 // Loading UI
+                                 const submitBtn = document.getElementById("kt_register_signin_link");
+                                 submitBtn.disabled = true;
+                                 submitBtn.querySelector(".indicator-label").style.display = "none";
+                                 submitBtn.querySelector(".indicator-progress").style.display = "inline-block";
+
+                                 try {
+                                    const res = await fetch("/api/auth/register", {
+                                       method: "POST",
+                                       headers: {
+                                          "Content-Type": "application/json"
+                                       },
+                                       body: JSON.stringify({ email, username, gender, password })
+                                    });
+
+                                    const data = await res.json();
+
+                                    // Reset loading UI
+                                    submitBtn.disabled = false;
+                                    submitBtn.querySelector(".indicator-label").style.display = "inline-block";
+                                    submitBtn.querySelector(".indicator-progress").style.display = "none";
+
+                                    if (data.success) {
+                                       Swal.fire({
+                                          icon: 'success',
+                                          title: 'Đăng ký thành công!',
+                                          text: 'Bạn có thể đăng nhập ngay bây giờ.',
+                                          timer: 2500,
+                                          showConfirmButton: false
+                                       }).then(() => {
+                                          window.location.href = "/auth/login";
+                                       });
+                                    } else {
+                                       Swal.fire({
+                                          icon: 'error',
+                                          title: 'Lỗi đăng ký',
+                                          text: data.error || 'Đã xảy ra lỗi không xác định.'
+                                       });
+                                    }
+
+                                 } catch (err) {
+                                    submitBtn.disabled = false;
+                                    submitBtn.querySelector(".indicator-label").style.display = "inline-block";
+                                    submitBtn.querySelector(".indicator-progress").style.display = "none";
+
+                                    Swal.fire({
+                                       icon: 'error',
+                                       title: 'Lỗi hệ thống',
+                                       text: 'Không thể kết nối đến máy chủ. Vui lòng thử lại sau.'
+                                    });
+                                 }
+                              });
+                           });
+                        </script>
+
+                        <!--begin::Sign In-->
+                        <div class="text-gray-500 text-center fw-semibold fs-6">
+                           Already have an Account?
+                           <a href="/auth/login" class="link-primary fw-semibold">
+                              Sign In
+                           </a>
+                        </div>
+                        <!--end::Sign In-->
+                        <!--end::Login with ... --> 
+                     </div>
+                     <!--end::Wrapper-->
+                     <!--begin::Footer-->  
+                     <div class="w-lg-500px d-flex flex-stack">
+                        <!--begin::Languages-->
+                        <div class="me-10">
+                           <div class="gtranslate_wrapper"></div>
+                           <script>window.gtranslateSettings = {"default_language":"en","wrapper_selector":".gtranslate_wrapper"}</script>
+                           <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+                        </div>
+                        <!--end::Languages--> 
+                        <!--begin::Links-->
+                        <div class="d-flex fw-semibold text-primary fs-base gap-5">
+                           <a href="https://preview.keenthemes.com/metronic8/demo38/pages/team.html" target="_blank">Terms</a>
+                           <a href="https://preview.keenthemes.com/metronic8/demo38/pages/pricing/column.html" target="_blank">Plans</a>
+                           <a href="https://preview.keenthemes.com/metronic8/demo38/pages/contact.html" style="margin-right: 20px;" target="_blank">Contact Us</a>
+                        </div>
+                        <!--end::Links-->
+                     </div>
+                     <!--end::Footer-->
+                  </div>
+                  <!--end::Content-->
+               </div>
+               <!--end::Wrapper-->
+            </div>
+            <!--end::Body-->
+         </div>
+         <!--end::Authentication - Sign-up-->
+      </div>
+      <!--end::Root--> 
+    {{> scripts}}  {{!-- chỉ lấy thư viện script từ main --}}
+   </body>
+   <!--end::Body-->
+</html>

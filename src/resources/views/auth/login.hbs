@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> head}}  {{!-- chỉ lấy thư viện head từ main --}}
+  </head>
+  <!--begin::Body-->
+   <body  id="kt_body"  class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center" > 
+      <!--begin::Root-->
+      <div class="d-flex flex-column flex-root" id="kt_app_root">
+         <!--begin::Page bg image-->
+         <style>
+            body {
+            background-image: url('https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/bg10.jpeg');
+            }
+            [data-bs-theme="dark"] body {
+            background-image: url('https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/bg10-dark.jpeg');
+            }
+         </style>
+         <!--end::Page bg image-->
+         <!--begin::Authentication - Sign-in -->
+         <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <!--begin::Aside-->
+            <div class="d-flex flex-lg-row-fluid">
+               <!--begin::Content-->
+               <div class="d-flex flex-column flex-center pb-0 pb-lg-10 p-10 w-100">
+                  <!--begin::Image-->                
+                  <img class="theme-light-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/agency.png" alt=""/>    
+                  <img class="theme-dark-show mx-auto mw-100 w-150px w-lg-300px mb-10 mb-lg-20" src="https://preview.keenthemes.com/metronic8/demo38/assets/media/auth/agency-dark.png" alt=""/>                 
+                  <!--end::Image-->
+                  <!--begin::Title-->
+                  <h1 class="text-gray-800 fs-2qx fw-bold text-center mb-7"> 
+                     Fast, Efficient and Productive
+                  </h1>
+                  <!--end::Title-->
+                  <!--begin::Text-->
+                  <div class="text-gray-600 fs-base text-center fw-semibold">
+                     In this kind of post, <a href="#" class="opacity-75-hover text-primary me-1">the blogger</a> 
+                     introduces a person they’ve interviewed <br/> and provides some background information about 
+                     <a href="#" class="opacity-75-hover text-primary me-1">the interviewee</a> 
+                     and their <br/> work following this is a transcript of the interview.  
+                  </div>
+                  <!--end::Text-->
+               </div>
+               <!--end::Content-->
+            </div>
+            <!--begin::Aside-->
+            <!--begin::Body-->
+            <div class="d-flex flex-column-fluid flex-lg-row-auto justify-content-center justify-content-lg-end p-12">
+               <!--begin::Wrapper-->
+               <div class="bg-body d-flex flex-column flex-center rounded-4 w-md-600px p-10">
+                  <!--begin::Content-->
+                  <div class="d-flex flex-center flex-column align-items-stretch h-lg-100 w-md-500px" style="min-height: 600px;">
+                     <!--begin::Wrapper-->
+                     <div class="d-flex flex-center flex-column flex-column-fluid pb-15 pb-lg-20">
+                        <!--begin::Login with ... --> 
+                        <div class="text-center mb-11">
+                           <h1 class="text-gray-900 fw-bolder mb-3">Sign In</h1>
+                           <div class="text-gray-500 fw-semibold fs-6">
+                              Dungbios Commerce Platform
+                           </div>
+                        </div> 
+
+                        <!--begin::Login options-->
+                        <div class="row row-cols-1 row-cols-md-2 g-3">
+                           <!--begin::Google-->
+                           <div class="col mb-3 mb-md-5">
+                              <a id="btn_login_google" href="/auth/google" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
+                                 <img alt="Logo" src="https://preview.keenthemes.com/metronic8/demo38/assets/media/svg/brand-logos/google-icon.svg" class="h-15px me-3"/>   
+                                 Sign in with Google
+                              </a>
+                           </div>
+                           <!--end::Google-->
+
+                           <!--begin::Discord-->
+                           <div class="col mb-3 mb-md-5">
+                              <a id="btn_login_discord" href="javascript:void(0);" class="btn btn-flex btn-outline btn-text-gray-400 bg-light-secondary flex-center text-nowrap w-100 position-relative disabled" tabindex="-1" aria-disabled="true">
+                                 <img alt="Discord Logo" src="https://cdn.simpleicons.org/discord/CCCCCC" class="theme-light-show h-15px me-3" />
+                                 <img alt="Discord Logo" src="https://cdn.simpleicons.org/discord/444444" class="theme-dark-show h-15px me-3" />
+                                 Sign in with Discord
+                                 <span class="position-absolute top-0 end-0 badge badge-light-warning fs-8 fw-bold fst-italic translate-middle mt-n1 me-n1">
+                                    Coming Soon
+                                 </span>
+                              </a>
+                           </div>
+                           <!--end::Discord-->
+
+                           <!--begin::Facebook-->
+                           <div class="col mb-3 mb-md-5">
+                              <a id="btn_login_facebook" href="javascript:void(0);" class="btn btn-flex btn-outline btn-text-gray-400 bg-light-secondary flex-center text-nowrap w-100 position-relative disabled" tabindex="-1" aria-disabled="true">
+                                 <img alt="Facebook Logo" src="https://cdn.simpleicons.org/facebook/CCCCCC" class="theme-light-show h-15px me-3" />
+                                 <img alt="Facebook Logo" src="https://cdn.simpleicons.org/facebook/444444" class="theme-dark-show h-15px me-3" />
+                                 Sign in with Facebook
+                                 <span class="position-absolute top-0 end-0 badge badge-light-warning fs-8 fw-bold fst-italic translate-middle mt-n1 me-n1">
+                                    Coming Soon
+                                 </span>
+                              </a>
+                           </div>
+                           <!--end::Facebook-->
+
+                           <!--begin::GitHub-->
+                           <div class="col mb-3 mb-md-5">
+                              <a id="btn_login_github" href="javascript:void(0);" class="btn btn-flex btn-outline btn-text-gray-400 bg-light-secondary flex-center text-nowrap w-100 position-relative disabled" tabindex="-1" aria-disabled="true">
+                                 <img alt="GitHub Logo" src="https://cdn.simpleicons.org/github/CCCCCC" class="theme-light-show h-15px me-3" />
+                                 <img alt="GitHub Logo" src="https://cdn.simpleicons.org/github/444444" class="theme-dark-show h-15px me-3" />
+                                 Sign in with GitHub
+                                 <span class="position-absolute top-0 end-0 badge badge-light-warning fs-8 fw-bold fst-italic translate-middle mt-n1 me-n1">
+                                    Coming Soon
+                                 </span>
+                              </a>
+                           </div>
+                           <!--end::GitHub-->
+                        </div>
+                        <!--end::Login options-->
+
+                        <!--begin::Separator-->
+                        <div class="separator separator-content my-10">
+                           <span class="w-300px text-gray-500 fw-semibold fs-7">Or with your account</span>
+                        </div>
+                        <!--end::Separator-->
+
+                        <!--begin::Local Login Form-->
+                        <form class="form w-100" novalidate="novalidate" id="form_login_local" method="POST" action="">
+
+                           <!--begin::Input group-->
+                           <div class="form-floating fv-row mb-8">
+                              <input type="text" class="form-control bg-transparent" name="username" autocomplete="off" id="floatingUsername" placeholder="Enter your username" required/>
+                              <label class="text-muted fw-bold" for="floatingUsername">Enter your username</label>
+                           </div>
+                           <!--end::Input group--> 
+
+                           <!--begin::Input group-->
+                           <div class="form-floating fv-row mb-8">
+                              <input type="password" class="form-control bg-transparent" name="password" autocomplete="off" id="floatingPassword" placeholder="Enter your password" required/>
+                              <label class="text-muted fw-bold" for="floatingPassword">Enter your password</label>
+                           </div>
+                           <!--end::Input group-->
+
+                           <!--begin::Wrapper-->
+                           <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                              <div></div>
+                              <a href="/auth/changePassword" class="link-primary">
+                                 Forgot Password?
+                              </a>
+                           </div>
+                           <!--end::Wrapper-->
+
+                           <!--begin::Submit button-->
+                           <div class="d-grid mb-10">
+                              <button type="submit" id="btn_submit_login_local" class="btn btn-primary">
+                                 <span class="indicator-label">Sign In</span>
+                                 <span class="indicator-progress">
+                                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                 </span>
+                              </button>
+                           </div>
+                           <!--end::Submit button-->
+                        </form>
+                        <!--end::Local Login Form-->
+
+                        <script>
+                           document.addEventListener("DOMContentLoaded", function () {
+                              const form = document.getElementById("form_login_local");
+                              let failedAttempts = 0;   
+
+                              form.addEventListener("submit", async function (e) {
+                                 e.preventDefault();
+
+                                 const username = form.username.value.trim();
+                                 const password = form.password.value;
+
+                                 if (!username || !password) {
+                                    return Swal.fire({
+                                       icon: 'warning',
+                                       title: 'Thiếu thông tin',
+                                       text: 'Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.'
+                                    });
+                                 }
+
+                                 // Loading UI
+                                 const submitBtn = document.getElementById("btn_submit_login_local");
+                                 submitBtn.disabled = true;
+                                 submitBtn.querySelector(".indicator-label").style.display = "none";
+                                 submitBtn.querySelector(".indicator-progress").style.display = "inline-block";
+
+                                 try {
+                                    const response = await fetch("/api/auth/login", {
+                                       method: "POST",
+                                       headers: {
+                                          "Content-Type": "application/json"
+                                       },
+                                       body: JSON.stringify({ username, password })
+                                    });
+
+                                    const result = await response.json();
+
+                                    // Dừng loading
+                                    submitBtn.disabled = false;
+                                    submitBtn.querySelector(".indicator-label").style.display = "inline-block";
+                                    submitBtn.querySelector(".indicator-progress").style.display = "none";
+
+                                    if (result.success) {
+                                       Swal.fire({
+                                          icon: 'success',
+                                          title: result.message || 'Đăng nhập thành công!',
+                                          text: 'Đang chuyển hướng...',
+                                          timer: 2000,
+                                          showConfirmButton: false
+                                       }).then(() => {
+                                          window.location.href = result.redirect || '/';
+                                       });
+                                    } else {
+                                       failedAttempts++;
+
+                                       if (failedAttempts >= 5) {
+                                          Swal.fire({
+                                             icon: 'error',
+                                             title: 'Đăng nhập thất bại quá nhiều lần',
+                                             text: 'Bạn sẽ được chuyển đến trang thay đổi mật khẩu.',
+                                             confirmButtonText: 'Chuyển ngay'
+                                          }).then(() => {
+                                             window.location.href = "/auth/changePassword";
+                                          });
+                                       } else {
+                                          Swal.fire({
+                                             icon: 'error',
+                                             title: 'Đăng nhập thất bại',
+                                             text: result.error || 'Tên đăng nhập hoặc mật khẩu không đúng.'
+                                          });
+                                       }
+                                    }
+
+                                 } catch (err) {
+                                    submitBtn.disabled = false;
+                                    submitBtn.querySelector(".indicator-label").style.display = "inline-block";
+                                    submitBtn.querySelector(".indicator-progress").style.display = "none";
+
+                                    Swal.fire({
+                                       icon: 'error',
+                                       title: 'Lỗi hệ thống',
+                                       text: 'Không thể kết nối đến máy chủ.'
+                                    });
+                                 }
+                              });
+                           });
+                        </script>
+
+                        <!--begin::Sign up-->
+                        <div class="text-gray-500 text-center fw-semibold fs-6">
+                           Not a Member yet?
+                           <a href="/auth/register" class="link-primary">
+                              Sign up
+                           </a>
+                        </div>
+                        <!--end::Sign up-->
+                        <!--end::Login with ... --> 
+                     </div>
+                     <!--end::Wrapper-->
+                     <!--begin::Footer-->  
+                     <div class=" d-flex flex-stack">
+                        <!--begin::Languages-->
+                        <div class="me-10">
+                           <div class="gtranslate_wrapper"></div>
+                           <script>window.gtranslateSettings = {"default_language":"en","wrapper_selector":".gtranslate_wrapper"}</script>
+                           <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+                        </div>
+                        <!--end::Languages--> 
+                        <!--begin::Links-->
+                        <div class="d-flex fw-semibold text-primary fs-base gap-5">
+                           <a href="https://preview.keenthemes.com/metronic8/demo38/pages/team.html" target="_blank">Terms</a>
+                           <a href="https://preview.keenthemes.com/metronic8/demo38/pages/pricing/column.html" target="_blank">Plans</a>
+                           <a href="https://preview.keenthemes.com/metronic8/demo38/pages/contact.html" target="_blank">Contact Us</a>
+                        </div>
+                        <!--end::Links-->
+                     </div>
+                     <!--end::Footer-->
+                  </div>
+                  <!--end::Content-->
+               </div>
+               <!--end::Wrapper-->
+            </div>
+            <!--end::Body-->
+         </div>
+         <!--end::Authentication - Sign-in-->
+      </div>
+      <!--end::Root--> 
+    {{> scripts}}  {{!-- chỉ lấy thư viện script từ main --}}
+   </body>
+   <!--end::Body-->
+</html>

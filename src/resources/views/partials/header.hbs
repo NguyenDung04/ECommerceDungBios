@@ -1,0 +1,277 @@
+<!--begin::Header-->
+<div id="kt_app_header" class="app-header">
+    <!--begin::Header primary-->
+    <div class="app-header-primary">
+        <div class="app-container container-xxl d-flex align-items-stretch justify-content-between py-2 py-lg-0" id="kt_app_header_primary_container">
+            <!-- Bên trái -->
+            <div class="d-flex align-items-center">
+                <div class="d-flex gap-4 align-items-center">
+                    <a href="https://www.facebook.com/keenthemes/" target="_blank" class="d-flex align-items-center">
+                    <img src="https://preview.keenthemes.com//metronic8/demo28/assets/media/svg/brand-logos/facebook-5.svg" class="w-20px" alt="" />
+                    <span class="text-gray-700 text-hover-primary fw-bold fs-6 ps-2">Facebook</span>
+                    </a>
+                    <a href="https://twitter.com/keenthemes" target="_blank" class="d-flex align-items-center">
+                    <img src="https://preview.keenthemes.com//metronic8/demo28/assets/media/svg/brand-logos/twitter-2.svg" class="w-20px" alt="" />
+                    <span class="text-gray-700 text-hover-primary fw-bold fs-6 ps-2">Twitter</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Bên phải -->
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center m-3">
+                    <a href="#" class="btn btn-custom btn-color-gray-600 btn-active-light d-flex align-items-center p-0 m-0">
+                    <i class="fa-regular fa-bell fa-lg"></i>
+                    <span class="fw-semibold d-none d-lg-inline ms-2">Thông báo</span>
+                    </a>
+                </div>
+                <div class="d-flex align-items-center m-3">
+                    <a href="#" class="btn btn-custom btn-color-gray-600 btn-active-light d-flex align-items-center p-0 m-0"> 
+                    <i class="fa-regular fa-circle-question fa-lg"></i>
+                    <span class="fw-semibold d-none d-lg-inline ms-2">Hỗ trợ</span>
+                    </a>
+                </div>
+                <div class="d-flex align-items-center m-3">
+                    <div class="gtranslate_wrapper"></div>
+                    <script>
+                        window.gtranslateSettings = {
+                           default_language: "vi",
+                           native_language_names: true,
+                           detect_browser_language: true,
+                           globe_color: "#66aaff",
+                           wrapper_selector: ".gtranslate_wrapper",
+                           globe_size: 28
+                        }; 
+                    </script>
+                    <script src="https://cdn.gtranslate.net/widgets/latest/globe.js" defer></script>
+                </div> 
+                {{#if user}}
+                    <div class="menu   
+                        menu-rounded 
+                        menu-active-bg 
+                        menu-state-primary 
+                        menu-column 
+                        menu-lg-row 
+                        menu-title-gray-700 
+                        menu-icon-gray-500 
+                        menu-arrow-gray-500 
+                        menu-bullet-gray-500 
+                        my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0 "         
+                        id="kt_app_header_menu"
+                        data-kt-menu="true"
+                        >
+                        <!--begin:Menu item-->
+                        <div  data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"  class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2" >
+                            <!--begin:Menu link-->
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center p-3 rounded bg-light">
+                                    <!-- Avatar -->
+                                        <div class="symbol symbol-45px symbol-circle me-4">
+                                            <img src="{{user.avatarUrl}}" alt="Avatar" />
+                                        </div>
+
+                                        <!-- Thông tin -->
+                                        <div class="d-flex flex-column">
+                                            <div class="d-flex align-items-center">
+                                            <span class="fw-bold text-dark me-2">{{user.name}}</span>
+
+                                            <!-- Badge đổi màu theo role -->
+                                            <span class="badge fw-semibold px-2 py-1
+                                                {{#if (eq user.role 'admin')}}badge-danger
+                                                {{else if (eq user.role 'shop')}}badge-warning
+                                                {{else}}badge-success{{/if}}">
+                                                {{user.role}}
+                                            </span>
+                                            </div>
+                                            <span class="text-muted">{{user.currentMoney}} đ</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--end:Menu link-->
+
+                            <!--begin:Menu sub-->
+                            <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-200px" >
+                                <!--begin:Menu item-->
+                                <div  data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"  class="menu-item menu-lg-down-accordion" >
+                                    <!--begin:Menu link-->
+                                    <a href="" class="menu-link py-3">Tài khoản của tôi</a>
+                                    <!--end:Menu link-->
+                                    <!--begin:Menu link-->
+                                    <a href="" class="menu-link py-3">Đơn mua</a>
+                                    <!--end:Menu link-->
+
+                                    {{!-- ✅ Nếu là admin hợp lệ --}}
+                                    {{#if (and (eq user.role 'admin') (not user.isBanned) (not user.deleted))}}
+                                    <div class="menu-item">
+                                        <a href="/admin/dashboard" class="menu-link py-3 fw-semibold">Trang quản lý</a>
+                                    </div>
+                                    {{/if}}
+
+                                    {{!-- ✅ Nếu là shop hợp lệ --}}
+                                    {{#if (and (eq user.role 'shop') (not user.isBanned) (not user.deleted))}}
+                                    <div class="menu-item">
+                                        <a href="/shop/dashboard" class="menu-link py-3 fw-semibold">Quản trị Shop</a>
+                                    </div>
+                                    {{/if}}
+
+                                    <!--begin:Menu link-->
+                                    <a href="/auth/logout" class="menu-link py-3">Đăng xuất</a>
+                                    <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item--> 
+                            </div>
+                            <!--end:Menu sub-->
+                    </div>
+                    <!--end:Menu item-->   
+                </div>
+                <!--end::Menu-->
+
+                {{else}}
+                    <div class="d-flex align-items-center">
+                        <a href="/auth/login" class="text-muted text-hover-primary fw-semibold">Đăng nhập</a>
+                        <span class="text-muted m-2">|</span>
+                        <a href="/auth/register" class="text-muted text-hover-primary fw-semibold">Đăng ký</a>
+                    </div>
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+    <!--end::Header primary-->
+    <!--begin::Header secondary-->
+    <div class="app-header-secondary"
+        data-kt-sticky="true"
+        data-kt-sticky-name="app-header-secondary-sticky"
+        data-kt-sticky-offset="{default: 'false', lg: '300px'}">
+        <!--begin::Header secondary container-->
+        <div class="app-container container-xxl py-5 py-lg-0 d-flex align-items-stretch" id="kt_app_header_secondary_container">
+            <!--begin::Header secondary-->
+            <div class="app-navbar-item row align-items-center gx-4 w-100">
+                <!-- Cột trái: Logo -->
+                <div class="col-12 col-lg-2 d-flex justify-content-start mb-3 mb-lg-0">
+                    <a href="/" class="d-flex align-items-center me-2">
+                    <img alt="Logo" src="https://preview.keenthemes.com//metronic8/demo28/assets/media/logos/demo-28-small.svg" class="h-20px d-sm-none d-inline theme-light-show" />
+                    <img alt="Logo" src="https://preview.keenthemes.com//metronic8/demo28/assets/media/logos/demo-28.svg" class="h-20px h-lg-25px theme-light-show d-none d-sm-inline" />
+                    <img alt="Logo" src="https://preview.keenthemes.com//metronic8/demo28/assets/media/logos/demo-28-dark.png" class="h-20px h-lg-25px theme-dark-show" />
+                    </a>
+                </div>
+                <!-- Cột giữa: Tìm kiếm -->
+                <div class="col-12 col-lg-8 d-flex justify-content-center mb-3 mb-lg-0">
+                    <form action="/search" method="GET" class="w-100">
+                        <div class="input-group w-100 rounded-pill overflow-hidden">
+                            <!-- Icon kính lúp bên trái -->
+                            <span class="input-group-text bg-light border-0">
+                            <i class="fa-solid fa-magnifying-glass text-muted"></i>
+                            </span>
+                            <!-- Ô nhập -->
+                            <input type="text" name="q" class="form-control form-control-solid border-0" placeholder="Tìm kiếm sản phẩm..." />
+                            <!-- Nút tìm kiếm -->
+                            <button type="submit" class="btn btn-outline-success">
+                            Tìm kiếm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Cột phải: Giỏ hàng -->
+                <div class="col-12 col-lg-2 d-flex justify-content-end">
+                    <a href="/cart" class="btn btn-custom btn-color-gray-600 btn-active-light position-relative d-flex align-items-center">
+                        <i class="fa-solid fa-cart-shopping fa-lg"></i> 
+                        <!-- Badge số lượng -->
+                        <span class="position-absolute top-0 start-100 translate-middle badge badge-circle bg-primary fs-8">
+                        0
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <!--end::Header secondary-->
+        </div>
+        <!--end::Header secondary container-->
+    </div>
+    <!--end::Header secondary-->
+    <!--begin::Header tertiary-->
+    <div class="app-header-tertiary  app-header-mobile-drawer "
+        data-kt-drawer="true" data-kt-drawer-name="app-header-menu" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="225px" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_app_header_menu_toggle"                  data-kt-sticky="false" data-kt-sticky-name="app-header-tertiary-sticky" data-kt-sticky-offset="{default: 'false', lg: '300px'}"                  
+        data-kt-swapper="true" data-kt-swapper-mode="append" data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header'}"  >
+        <!--begin::Header tertiary container-->
+        <div class="app-container  container-xxl app-container-fit-mobile d-flex align-items-stretch " id="kt_app_header_tertiary_container">
+            <!--begin::Menu wrapper-->
+            <div class="app-header-menu d-flex align-items-stretch w-100">
+                <!--begin::Menu-->
+                <div 
+                    class="menu   
+                    menu-rounded 
+                    menu-active-bg 
+                    menu-state-primary 
+                    menu-column 
+                    menu-lg-row 
+                    menu-title-gray-700 
+                    menu-icon-gray-500 
+                    menu-arrow-gray-500 
+                    menu-bullet-gray-500 
+                    my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0
+                    "         
+                    id="kt_app_header_menu"
+                    data-kt-menu="true"
+                    >
+                    <!--begin:Menu item-->
+                    <div  data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start"  class="menu-item menu-lg-down-accordion menu-sub-lg-down-indention me-0 me-lg-2" >
+                        <!--begin:Menu link--><span class="menu-link py-3"  ><span  class="menu-title" >Apps</span><span  class="menu-arrow d-lg-none" ></span></span><!--end:Menu link--><!--begin:Menu sub-->
+                        <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown px-lg-2 py-lg-4 w-lg-250px" >
+                            <!--begin:Menu item-->
+                            <div  data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"  class="menu-item menu-lg-down-accordion" >
+                                <!--begin:Menu link--><span class="menu-link py-3"  ><span  class="menu-icon" ><i class="ki-duotone ki-shield-tick fs-2"><span class="path1"></span><span class="path2"></span></i></span><span  class="menu-title" >User Management</span><span  class="menu-arrow" ></span></span><!--end:Menu link--><!--begin:Menu sub-->
+                                <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg px-lg-2 py-lg-4 w-lg-225px" >
+                                    <!--begin:Menu item-->
+                                    <div  data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"  class="menu-item menu-lg-down-accordion" >
+                                        <!--begin:Menu link--><span class="menu-link py-3"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >Users</span><span  class="menu-arrow" ></span></span><!--end:Menu link--><!--begin:Menu sub-->
+                                        <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg px-lg-2 py-lg-4 w-lg-225px" >
+                                            <!--begin:Menu item-->
+                                            <div  class="menu-item" >
+                                                <!--begin:Menu link--><a class="menu-link py-3"  href="https://preview.keenthemes.com//metronic8/demo28/apps/user-management/users/list.html"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >Users List</span></a><!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item--><!--begin:Menu item-->
+                                            <div  class="menu-item" >
+                                                <!--begin:Menu link--><a class="menu-link py-3"  href="https://preview.keenthemes.com//metronic8/demo28/apps/user-management/users/view.html"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >View User</span></a><!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+                                    <!--end:Menu item--><!--begin:Menu item-->
+                                    <div  data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-placement="right-start"  class="menu-item menu-lg-down-accordion" >
+                                        <!--begin:Menu link--><span class="menu-link py-3"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >Roles</span><span  class="menu-arrow" ></span></span><!--end:Menu link--><!--begin:Menu sub-->
+                                        <div  class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown menu-active-bg px-lg-2 py-lg-4 w-lg-225px" >
+                                            <!--begin:Menu item-->
+                                            <div  class="menu-item" >
+                                                <!--begin:Menu link--><a class="menu-link py-3"  href="https://preview.keenthemes.com//metronic8/demo28/apps/user-management/roles/list.html"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >Roles List</span></a><!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item--><!--begin:Menu item-->
+                                            <div  class="menu-item" >
+                                                <!--begin:Menu link--><a class="menu-link py-3"  href="https://preview.keenthemes.com//metronic8/demo28/apps/user-management/roles/view.html"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >View Roles</span></a><!--end:Menu link-->
+                                            </div>
+                                            <!--end:Menu item-->
+                                        </div>
+                                        <!--end:Menu sub-->
+                                    </div>
+                                    <!--end:Menu item--><!--begin:Menu item-->
+                                    <div  class="menu-item" >
+                                        <!--begin:Menu link--><a class="menu-link py-3"  href="https://preview.keenthemes.com//metronic8/demo28/apps/user-management/permissions.html"  ><span  class="menu-bullet" ><span class="bullet bullet-dot"></span></span><span  class="menu-title" >Permissions</span></a><!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu sub-->
+                            </div>
+                            <!--end:Menu item--> 
+                        </div>
+                        <!--end:Menu sub-->
+                    </div>
+                    <!--end:Menu item-->   
+                </div>
+                <!--end::Menu-->
+            </div>
+            <!--end::Menu wrapper-->                    
+        </div>
+        <!--end::Header tertiary container-->
+    </div>
+    <!--end::Header tertiary-->    
+</div>
+<!--end::Header-->
