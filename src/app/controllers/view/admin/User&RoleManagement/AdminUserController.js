@@ -1,6 +1,6 @@
 // 📁 controllers/admin/AdminUserController.js
-import User from '../../../models/Users.js';
-import { multipleMongooseToObject } from '../../../../util/mongoose.js';
+import User from '../../../../models/Users.js';
+import { multipleMongooseToObject } from '../../../../../util/mongoose.js';
 
 export default {
   async show(req, res) {
