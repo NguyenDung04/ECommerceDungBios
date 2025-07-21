@@ -49,6 +49,7 @@ app.engine(
             eq: (a, b) => a === b,
             not: (v) => !v,
             and: (...args) => args.slice(0, -1).every(Boolean),
+            or: (...args) => args.slice(0, -1).some(Boolean), 
         },
     })
 );

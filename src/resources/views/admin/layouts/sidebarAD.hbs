@@ -81,25 +81,25 @@
                     </a>
                     <!--end::Menu link-->
                 </div>
-                <!--end::Menu Item--> 
-                <!--begin::Menu Item-->
-                <div class="menu-item">
-                    <!--begin::Menu link-->
-                    <a class="menu-link " href="/admin/adminM">
-                        <!--begin::Icon-->
-                        <span class="menu-icon">
-                            <i class="fa-solid fa-users-gear fa-xl" style="color: #F8285A;"></i>
-                        </span>
-                        <!--end::Icon-->
-                        <!--begin::Title-->
-                        <span class="menu-title">
-                            Admin accounts
-                        </span>
-                        <!--end::Title-->
-                    </a>
-                    <!--end::Menu link-->
-                </div>
-                <!--end::Menu Item--> 
+                <!--end::Menu Item-->   
+
+                {{#if (and (eq user.role 'admin') (not user.isBanned) (not (or (eq user.level 1) (eq user.level 2))) (not user.deleted))}}
+                    <!--begin::Menu Item-->
+                    <div class="menu-item">
+                        <!--begin::Menu link-->
+                        <a class="menu-link " href="/admin/adminM">
+                            <!--begin::Icon-->
+                            <span class="menu-icon">
+                                <i class="fa-solid fa-users-gear fa-xl" style="color: #F8285A;"></i>
+                            </span>
+                            <!--end::Icon-->
+                            <span class="menu-title">Admin accounts</span>
+                        </a>
+                        <!--end::Menu link-->
+                    </div>
+                    <!--end::Menu Item-->
+                {{/if}}
+
                 <!--begin::Menu Item-->
                 <div class="menu-item">
                     <!--begin::Menu link-->
