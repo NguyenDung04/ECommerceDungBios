@@ -1,25 +1,25 @@
-@use 'variables' as vars;
+@use "variables" as vars;
 
 .search-form {
-    border: 1px solid vars.$primary-color;
-    padding: 20px;
-    border-radius: 5px;
+  border: 1px solid vars.$primary-color;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 .one-line-ellipsis {
-    line-height: 1.8rem;
-    overflow: hidden;
-    display: block;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+  line-height: 1.8rem;
+  overflow: hidden;
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .two-line-ellipsis {
-    line-height: 1.8rem;
-    overflow: hidden;
-    display: block;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+  line-height: 1.8rem;
+  overflow: hidden;
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }

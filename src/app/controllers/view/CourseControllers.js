@@ -62,7 +62,7 @@
 //                 name,
 //                 slug,
 //                 description,
-//                 img_courses: imagePath, 
+//                 img_courses: imagePath,
 //             });
 
 //             await course.save();
@@ -107,7 +107,7 @@
 //             next(err);
 //         }
 //     }
-    
+
 //     // POST /course/delete/:id
 //     async delete(req, res, next) {
 //         try {
@@ -119,8 +119,8 @@
 //             next(err);
 //         }
 //     }
-    
-//     // POST /course/delete-multiple 
+
+//     // POST /course/delete-multiple
 //     async deleteMultiple(req, res, next) {
 //         try {
 //             const { action } = req.body;
@@ -171,7 +171,6 @@
 
 //         // Tiếp tục với truy vấn
 
-
 //         Promise.all([courseQuery, Course.countDocumentsDeleted()])
 //             .then(([courses, deleteCount]) => {
 //                 res.render('course/trash', {
@@ -182,7 +181,7 @@
 //             .catch(error => {
 //                 next(error); // Gọi next với lỗi để xử lý ở middleware lỗi
 //             });
-//     } 
+//     }
 
 //     // PATCH /course/restore/:id
 //     async restore(req, res, next) {

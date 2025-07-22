@@ -1,16 +1,16 @@
-import express from 'express';
-import userController from '../../../../app/controllers/api/admin/User&RoleManagement/UserController.js'; 
+import express from "express";
+import userController from "../../../../app/controllers/api/admin/User&RoleManagement/UserController.js";
 
-const router = express.Router(); 
+const router = express.Router();
 
-router.get('/', userController.getAll);
+router.get("/", userController.getAll);
 
-router.post('/:id/balance', userController.updateBalance);
+router.post("/:id/balance", userController.updateBalance);
 
 // 🔒 Ban user
-router.post('/:id/ban', userController.banUser);
+router.post("/:id/ban", userController.banUser);
 
 // ✅ Unban user
-router.post('/:id/unban', userController.unbanUser);
+router.post("/:id/unban", userController.unbanUser);
 
 export default router;

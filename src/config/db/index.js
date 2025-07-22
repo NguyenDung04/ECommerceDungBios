@@ -1,13 +1,13 @@
 // Using ES6 imports
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-// Connect to MongoDB   
+// Connect to MongoDB
 async function connectDB() {
   try {
-    await mongoose.connect('mongodb://localhost:27017/project_one');
-    console.log('✅ MongoDB connected successfully');
+    await mongoose.connect("mongodb://localhost:27017/project_one");
+    console.log("✅ MongoDB connected successfully");
   } catch (err) {
-    console.error('❌ MongoDB connection error:', err);
+    console.error("❌ MongoDB connection error:", err);
   }
 }
 

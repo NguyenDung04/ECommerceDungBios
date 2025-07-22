@@ -4,18 +4,18 @@
     <div class="col-sm-6 col-lg-4">
       {{#each courses}}
 
-      <div class="card mt-3">
-        <a href="/course/{{slug}}">
-          <img src="{{img_courses}}" class="card-img-top" alt="{{name}}">
-        </a>
-        <div class="card-body">
-          <a href="/course/{{slug}}"> 
-            <h5 class="card-title">{{name}}</h5>
+        <div class="card mt-3">
+          <a href="/course/{{slug}}">
+            <img src="{{img_courses}}" class="card-img-top" alt="{{name}}" />
           </a>
-          <p class="card-text">{{description}}</p>
-          <a href="/course/{{slug}}" class="btn btn-primary">Go somewhere</a>
+          <div class="card-body">
+            <a href="/course/{{slug}}">
+              <h5 class="card-title">{{name}}</h5>
+            </a>
+            <p class="card-text">{{description}}</p>
+            <a href="/course/{{slug}}" class="btn btn-primary">Go somewhere</a>
+          </div>
         </div>
-      </div>
 
       {{/each}}
     </div>

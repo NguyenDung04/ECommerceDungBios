@@ -8,6 +8,8 @@
     "start": "nodemon --inspect src/index.js",
     "build:sass": "sass src/resources/scss/main.scss src/public/css/main.css",
     "watch:sass": "sass --watch src/resources/scss:src/public/css",
+    "prepare": "husky install",
+    "format": "prettier --write .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -57,5 +59,16 @@
     "nodemon": "^3.1.10",
     "prettier": "^3.6.2",
     "sass": "^1.89.2"
+  },
+  "lint-staged": {
+    "*.{js,ts,jsx,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{json,md,css,html}": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
