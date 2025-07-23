@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     {{> head}}  {{!-- chỉ lấy thư viện head từ main --}}
+    <!-- Nới lỏng CSP cho login -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;">
   </head>
   <!--begin::Body-->
    <body  id="kt_body"  class="app-blank bgi-size-cover bgi-attachment-fixed bgi-position-center" > 

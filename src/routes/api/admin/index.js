@@ -4,7 +4,7 @@ import dashboard from "./dashboard.js";
 import user from "./User&RoleManagement/user.js";
 import shop from "./User&RoleManagement/shop.js";
 import adminUser from "./User&RoleManagement/adminUser.js";
-// import rolePermission from './User&RoleManagement/rolePermission.js';
+import rolePermission from './User&RoleManagement/rolePermission.js';
 
 const router = express.Router();
 
@@ -13,6 +13,6 @@ router.use("/dashboard", dashboard);
 router.use("/users", user);
 router.use("/shops", shop);
 router.use("/admins", adminUser);
-// router.use('/rolePermissionM', rolePermission);
+router.use('/rolePermissions', rolePermission);
 
 export default router;

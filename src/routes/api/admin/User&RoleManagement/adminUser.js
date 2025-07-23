@@ -14,4 +14,8 @@ router.post("/:id/ban", AdminUserController.banAdmin);
 // ✅ Unban Admin
 router.post("/:id/unban", AdminUserController.unbanAdmin);
 
+router.get("/logs", AdminUserController.getAllLogsAffectingAdmin);
+
+router.get("/stats", AdminUserController.getStats);
+
 export default router;

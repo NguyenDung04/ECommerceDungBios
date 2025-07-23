@@ -5,6 +5,7 @@ import userController from "../../../../app/controllers/view/admin/User&RoleMana
 const router = express.Router();
 
 router.get("/", userController.show);
+
 router.get("/:id", userController.getOne);
 
 export default router;
