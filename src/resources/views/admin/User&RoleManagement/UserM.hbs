@@ -329,7 +329,7 @@
                                                          </span>
                                                       {{/if}}
                                                    </td>
-                                                   <td>{{currentMoney}}</td>
+                                                   <td>{{formatVND currentMoney}}</td>
                                                    <td>
                                                       {{#if isBanned}}
                                                          <div class="badge badge-light-danger">Banned</div>
@@ -505,7 +505,6 @@
                                     document.addEventListener("DOMContentLoaded", () => {
                                        // Mở modal xem thông tin chi tiết
                                        const showButtons = document.querySelectorAll(".btn-show-user");
-                                       const headers = document.querySelectorAll("thead th[data-dt-column]");
                                        showButtons.forEach((btn) => {
                                           btn.addEventListener("click", async (e) => {
                                              e.preventDefault();
@@ -536,41 +535,81 @@
                                                 alert("Không thể tải thông tin người dùng.");
                                              }
                                           });
-                                       });
-                                       // Sort theo cột
-                                       headers.forEach(header => {
-                                          const colIndex = parseInt(header.getAttribute("data-dt-column"));
-                                          const disabledSortCols = [4, 6, 7]; // 👈 Các cột KHÔNG muốn sort
-                                          if (disabledSortCols.includes(colIndex)) return; // ✅ Bỏ qua không xử lý
+                                       }); 
+                                    });
+ 
+                                    document.addEventListener("DOMContentLoaded", () => {
+                                       const table = document.querySelector("#kt_ecommerce_products_table");
+                                       const tbody = table.querySelector("tbody");
+                                       const headers = table.querySelectorAll("thead th");
+
+                                       // Chỉ cho phép sort các cột: User (1), Email (2), Gender (3), Level (4)
+                                       const sortableCols = [1, 2, 3, 4];
+
+                                       headers.forEach((header, colIndex) => {
+                                          if (!sortableCols.includes(colIndex)) return;
+
+                                          header.style.cursor = "pointer";
+
                                           header.addEventListener("click", () => {
-                                             const columnIndex = colIndex;
-                                             const table = header.closest("table");
-                                             const tbody = table.querySelector("tbody");
-                                             const rows = Array.from(tbody.querySelectorAll("tr"));
-                                             const currentSort = header.getAttribute("data-sort") || "asc";
-                                             const nextSort = currentSort === "asc" ? "desc" : "asc";
-                                             headers.forEach(h => h.removeAttribute("data-sort"));
-                                             header.setAttribute("data-sort", nextSort);
-                                             const cleanNumber = (str) => parseFloat(str.replace(/[^\d.-]/g, '')) || 0;
-                                             rows.sort((a, b) => {
-                                                let aText = a.children[columnIndex]?.innerText.trim() || "";
-                                                let bText = b.children[columnIndex]?.innerText.trim() || "";
-                                                if (header.innerText.includes("Balance")) {
-                                                   aText = cleanNumber(aText);
-                                                   bText = cleanNumber(bText);
-                                                }
-                                                if (header.innerText.includes("Status")) {
-                                                   aText = aText.toLowerCase();
-                                                   bText = bText.toLowerCase();
-                                                }
-                                                if (aText < bText) return nextSort === "asc" ? -1 : 1;
-                                                if (aText > bText) return nextSort === "asc" ? 1 : -1;
-                                                return 0;
-                                             });
-                                             rows.forEach(row => tbody.appendChild(row));
+                                                const currentSort = header.getAttribute("data-sort") || "asc";
+                                                const nextSort = currentSort === "asc" ? "desc" : "asc";
+
+                                                // Reset sort
+                                                headers.forEach(h => h.removeAttribute("data-sort"));
+                                                header.setAttribute("data-sort", nextSort);
+
+                                                // Get all rows
+                                                const rows = Array.from(tbody.querySelectorAll("tr"));
+
+                                                rows.sort((a, b) => {
+                                                   const aCell = a.querySelector(`td:nth-child(${colIndex + 1})`);
+                                                   const bCell = b.querySelector(`td:nth-child(${colIndex + 1})`);
+
+                                                   let aText = aCell?.innerText.trim().toLowerCase() || "";
+                                                   let bText = bCell?.innerText.trim().toLowerCase() || "";
+
+                                                   // Xử lý đặc biệt cho Gender (index 3) và Level (index 4)
+                                                   if (colIndex === 3) {
+                                                      aText = convertGender(aText);
+                                                      bText = convertGender(bText);
+                                                   } else if (colIndex === 4) {
+                                                      aText = convertLevel(aText);
+                                                      bText = convertLevel(bText);
+                                                   }
+
+                                                   if (aText < bText) return nextSort === "asc" ? -1 : 1;
+                                                   if (aText > bText) return nextSort === "asc" ? 1 : -1;
+                                                   return 0;
+                                                });
+
+                                                // Gắn lại tbody
+                                                tbody.innerHTML = "";
+                                                rows.forEach(row => tbody.appendChild(row));
                                           });
                                        });
-                                    });
+
+                                       // Convert gender text to sortable number
+                                       function convertGender(text) {
+                                          if (text.includes("male")) return "1";
+                                          if (text.includes("female")) return "2";
+                                          return "3";
+                                       }
+
+                                       // Convert level text to sortable number
+                                       function convertLevel(text) {
+                                          const map = {
+                                                "mặc định": 1,
+                                                "rank đồng": 2,
+                                                "rank bạc": 3,
+                                                "rank vàng": 4,
+                                                "khách vip": 5
+                                          };
+                                          const key = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+                                          return map[key] || 99;
+                                       }
+                                    }); 
+
                                     document.addEventListener("DOMContentLoaded", () => {
                                        const tableBody = document.querySelector("#kt_ecommerce_products_table tbody");
                                        const allRows = Array.from(tableBody.querySelectorAll("tr"));

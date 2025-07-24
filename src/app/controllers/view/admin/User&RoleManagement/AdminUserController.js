@@ -1,6 +1,9 @@
 // 📁 controllers/admin/AdminUserController.js
 import User from "../../../../models/Users.js";
-import { multipleMongooseToObject } from "../../../../../util/mongoose.js";
+import {
+  multipleMongooseToObject,
+  mongooseToObject,
+} from "../../../../../util/mongoose.js";
 
 export default {
   // Hiển thị danh sách người dùng

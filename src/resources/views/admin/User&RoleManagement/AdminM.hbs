@@ -319,7 +319,7 @@
                                                                             </span>
                                                                         {{/if}}
                                                                     </td>
-                                                                    <td>{{currentMoney}}</td>
+                                                                    <td>{{formatVND currentMoney}}</td>
                                                                     <td>
                                                                         {{#if isBanned}}
                                                                             <div class="badge badge-light-danger">Banned</div>
@@ -494,8 +494,7 @@
                                             <script>
                                                 document.addEventListener("DOMContentLoaded", () => {
                                                     // Mở modal xem thông tin chi tiết
-                                                    const showButtons = document.querySelectorAll(".btn-show-user");
-                                                    const headers = document.querySelectorAll("thead th[data-dt-column]");
+                                                    const showButtons = document.querySelectorAll(".btn-show-user"); 
                                                     showButtons.forEach((btn) => {
                                                         btn.addEventListener("click", async (e) => {
                                                             e.preventDefault();
@@ -526,41 +525,78 @@
                                                                 alert("Không thể tải thông tin quản trị viên.");
                                                             }
                                                         });
-                                                    });
-                                                    // Sort theo cột
-                                                    headers.forEach(header => {
-                                                        const colIndex = parseInt(header.getAttribute("data-dt-column"));
-                                                        const disabledSortCols = [4, 6, 7]; // 👈 Các cột KHÔNG muốn sort
-                                                        if (disabledSortCols.includes(colIndex)) return; // ✅ Bỏ qua không xử lý
+                                                    }); 
+                                                }); 
+                                                document.addEventListener("DOMContentLoaded", () => {
+                                                    const table = document.querySelector("#kt_ecommerce_products_table");
+                                                    if (!table) return;
+
+                                                    const tbody = table.querySelector("tbody");
+                                                    const headers = table.querySelectorAll("thead th");
+
+                                                    const sortableCols = [1, 2, 3, 4]; // Admin, Email, Gender, Level
+
+                                                    headers.forEach((header, colIndex) => {
+                                                        if (!sortableCols.includes(colIndex)) return;
+                                                        header.style.cursor = "pointer";
+
                                                         header.addEventListener("click", () => {
-                                                            const columnIndex = colIndex;
-                                                            const table = header.closest("table");
-                                                            const tbody = table.querySelector("tbody");
-                                                            const rows = Array.from(tbody.querySelectorAll("tr"));
                                                             const currentSort = header.getAttribute("data-sort") || "asc";
                                                             const nextSort = currentSort === "asc" ? "desc" : "asc";
+
                                                             headers.forEach(h => h.removeAttribute("data-sort"));
                                                             header.setAttribute("data-sort", nextSort);
-                                                            const cleanNumber = (str) => parseFloat(str.replace(/[^\d.-]/g, '')) || 0;
+
+                                                            const rows = Array.from(tbody.querySelectorAll("tr"));
+
                                                             rows.sort((a, b) => {
-                                                                let aText = a.children[columnIndex]?.innerText.trim() || "";
-                                                                let bText = b.children[columnIndex]?.innerText.trim() || "";
-                                                                if (header.innerText.includes("Balance")) {
-                                                                    aText = cleanNumber(aText);
-                                                                    bText = cleanNumber(bText);
+                                                                const aCell = a.querySelector(`td:nth-child(${colIndex + 1})`);
+                                                                const bCell = b.querySelector(`td:nth-child(${colIndex + 1})`);
+
+                                                                let aText = aCell?.innerText.trim().toLowerCase() || "";
+                                                                let bText = bCell?.innerText.trim().toLowerCase() || "";
+
+                                                                // Gender
+                                                                if (colIndex === 3) {
+                                                                    aText = convertGender(aText);
+                                                                    bText = convertGender(bText);
                                                                 }
-                                                                if (header.innerText.includes("Status")) {
-                                                                    aText = aText.toLowerCase();
-                                                                    bText = bText.toLowerCase();
+
+                                                                // Level
+                                                                if (colIndex === 4) {
+                                                                    aText = convertLevel(aText);
+                                                                    bText = convertLevel(bText);
                                                                 }
+
                                                                 if (aText < bText) return nextSort === "asc" ? -1 : 1;
                                                                 if (aText > bText) return nextSort === "asc" ? 1 : -1;
                                                                 return 0;
                                                             });
+
+                                                            tbody.innerHTML = "";
                                                             rows.forEach(row => tbody.appendChild(row));
                                                         });
                                                     });
-                                                });
+
+                                                    function convertGender(text) {
+                                                        if (text.includes("male")) return "1";
+                                                        if (text.includes("female")) return "2";
+                                                        return "3";
+                                                    }
+
+                                                    function convertLevel(text) {
+                                                        const map = {
+                                                            "admin chuyen trach": 1,
+                                                            "admin da nhiem": 2,
+                                                            "superadmin": 3
+                                                        };
+                                                        const key = text.toLowerCase()
+                                                            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                                                            .replace(/[^a-z\s]/g, "").trim();
+                                                        return map[key] || 99;
+                                                    }
+                                                }); 
+
                                                 document.addEventListener("DOMContentLoaded", () => {
                                                     const tableBody = document.querySelector("#kt_ecommerce_products_table tbody");
                                                     const allRows = Array.from(tableBody.querySelectorAll("tr"));

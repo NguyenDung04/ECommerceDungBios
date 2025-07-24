@@ -51,6 +51,10 @@ app.engine(
       not: (v) => !v,
       and: (...args) => args.slice(0, -1).every(Boolean),
       or: (...args) => args.slice(0, -1).some(Boolean),
+      formatVND: function (value) {
+        if (typeof value !== "number") return value;
+        return value.toLocaleString("vi-VN") + " ₫";
+      },
     },
   }),
 );

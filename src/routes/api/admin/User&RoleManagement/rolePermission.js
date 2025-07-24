@@ -5,4 +5,8 @@ const router = express.Router();
 
 router.get("/", RolePermissionController.getAllRoles);
 
+router.get("/logs", RolePermissionController.getAllLogsAffectingAdmin);
+
+router.get("/stats", RolePermissionController.getStats);
+
 export default router;

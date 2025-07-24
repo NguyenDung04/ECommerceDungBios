@@ -1,9 +1,11 @@
 // 📁 controllers/admin/ShopController.js
 import User from "../../../../models/Users.js";
-import { multipleMongooseToObject } from "../../../../../util/mongoose.js";
-
+import {
+  multipleMongooseToObject,
+  mongooseToObject,
+} from "../../../../../util/mongoose.js";
 export default {
-  // Hiển thị danh sách người dùng
+  // Hiển thị danh sách Shop
   async show(req, res) {
     try {
       const shops = await User.find({ role: "shop" });
@@ -16,13 +18,13 @@ export default {
     } catch (err) {
       console.error("[ShopController] show error:", err);
       res.status(500).render("error/404", {
-        message: "Lỗi khi tải danh sách Người dùng",
+        message: "Lỗi khi tải danh sách Shop",
         error: err.message,
       });
     }
   },
 
-  // Lấy thông tin chi tiết người dùng (cho modal)
+  // Lấy thông tin chi tiết Shop (cho modal)
   async getOne(req, res) {
     try {
       console.log("Fetching user with ID:", req.params.id);
@@ -33,7 +35,7 @@ export default {
       if (!shop) {
         return res.status(404).json({
           success: false,
-          message: "Không tìm thấy người dùng",
+          message: "Không tìm thấy Shop",
         });
       }
 

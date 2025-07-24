@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 
 export default {
-  // Lấy tất cả shop có role = 'user'
+  // Lấy tất cả shop có role = 'shop'
   async getAll(req, res) {
     try {
       const shops = await User.find({ role: "shop" });
