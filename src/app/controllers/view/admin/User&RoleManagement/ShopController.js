@@ -11,6 +11,7 @@ export default {
       const shops = await User.find({ role: "shop" });
       res.render("admin/User&RoleManagement/shopM", {
         shops: multipleMongooseToObject(shops),
+        role: "shop",
         title: "Quản lý Shop",
         layout: false,
         url: req.originalUrl,

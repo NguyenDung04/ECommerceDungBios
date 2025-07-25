@@ -14,4 +14,7 @@ router.post("/multi-unban", controller.unbanUsers);
 // 💰 Cập nhật số dư theo role
 router.post("/balance/:id", controller.updateBalance);
 
+// 📊 Lấy thống kê người dùng theo role
+router.get("/stats", controller.getStats);
+
 export default router;

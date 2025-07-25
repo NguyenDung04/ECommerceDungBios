@@ -87,6 +87,73 @@ export default {
         .json({ success: false, message: "Lỗi server", error: err.message });
     }
   },
+
+  // ✅ Lấy thống kê người dùng theo role
+  async getStats(req, res) {
+    try {
+      const rawRole = req.query.role;
+      const role = rawRole?.toLowerCase();
+
+      if (!role || !["user", "shop", "admin"].includes(role)) {
+        return res.status(400).json({
+          success: false,
+          message: "Role không hợp lệ",
+        });
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const firstDayOfMonth = new Date(
+        today.getFullYear(),
+        today.getMonth(),
+        1,
+      );
+      const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+
+      const [
+        totalUsers,
+        bannedUsers,
+        newUsersToday,
+        newUsersThisMonth,
+        newUsersThisYear,
+        totalBalance,
+      ] = await Promise.all([
+        User.countDocuments({ role }),
+        User.countDocuments({ role, isBanned: true }),
+        User.countDocuments({ role, createdAt: { $gte: today } }),
+        User.countDocuments({ role, createdAt: { $gte: firstDayOfMonth } }),
+        User.countDocuments({ role, createdAt: { $gte: firstDayOfYear } }),
+        User.aggregate([
+          { $match: { role } },
+          { $group: { _id: null, total: { $sum: "$currentMoney" } } },
+        ]),
+      ]);
+
+      const activeUsers = totalUsers - bannedUsers;
+      const totalBalanceAmount = totalBalance[0]?.total || 0;
+
+      res.json({
+        success: true,
+        data: {
+          role,
+          totalUsers,
+          activeUsers,
+          bannedUsers,
+          newUsersToday,
+          newUsersThisMonth,
+          newUsersThisYear,
+          totalBalance: totalBalanceAmount,
+        },
+      });
+    } catch (err) {
+      console.error("[getStats error]:", err);
+      res.status(500).json({
+        success: false,
+        message: "Lỗi server khi thống kê người dùng",
+        error: err.message,
+      });
+    }
+  },
 };
 
 // ================== PRIVATE SHARED FUNCTIONS ==================
@@ -95,7 +162,7 @@ export default {
 async function toggleBanStatusSingle(req, res, isBan) {
   try {
     const { id } = req.params;
-    const rawRole = req.body.role; // ✅ Lấy từ body thay vì query
+    const rawRole = req.body.role;
     const role = rawRole?.toLowerCase(); // chuẩn hóa
 
     // Kiểm tra role hợp lệ

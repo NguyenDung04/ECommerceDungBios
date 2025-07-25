@@ -6,6 +6,4 @@ const router = express.Router();
 
 router.get("/logs", AdminUserController.getAllLogsAffectingAdmin);
 
-router.get("/stats", AdminUserController.getStats);
-
 export default router;

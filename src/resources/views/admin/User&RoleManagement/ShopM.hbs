@@ -350,17 +350,17 @@
                                                                                     <i class="fa-regular fa-rectangle-list me-2"></i> Show </a>
                                                                             </div>
                                                                             <div class="menu-item px-3">
-                                                                                <a href="javascript:void(0)" class="menu-link px-3" data-user-id="{{_id}}" data-role="shop" onclick="openBalanceModal('{{_id}}', '{{email}}' , 'shop')">
+                                                                                <a href="javascript:void(0)" class="menu-link px-3" data-user-id="{{_id}}" onclick="openBalanceModal('{{_id}}', '{{email}}')">
                                                                                     <i class="fa-solid fa-coins me-2"></i> Balance </a>
                                                                             </div>
                                                                             {{#if isBanned}}
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-success" data-role="shop" onclick="unbanUser('{{_id}}' , 'shop')">
+                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-success" onclick="unbanUser('{{_id}}')">
                                                                                         <i class="fa-solid fa-thumbs-up me-2"></i> Unban </a>
                                                                                 </div>
                                                                             {{else}}
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-danger" data-role="shop" onclick="banUser('{{_id}}' , 'shop')">
+                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-danger" onclick="banUser('{{_id}}')">
                                                                                         <i class="fa-solid fa-thumbs-down me-2"></i> Ban </a>
                                                                                 </div>
                                                                             {{/if}}
@@ -508,6 +508,7 @@
                                                 </div>
                                             </div>
                                             <script>
+                                                const globalRole = '{{role}}';
                                                 document.addEventListener("DOMContentLoaded", () => {
                                                     // Mở modal xem thông tin chi tiết
                                                     const showButtons = document.querySelectorAll(".btn-show-user"); 
@@ -689,7 +690,7 @@
                                                 });
                                                 
                                                 // ======================= BAN / UNBAN =======================
-                                                async function banUser(userId, role = 'shop') {
+                                                async function banUser(userId, role = globalRole) {
                                                     const result = await Swal.fire({
                                                         title: 'Xác nhận ban?',
                                                         text: 'Shop sẽ bị chặn khỏi hệ thống!',
@@ -717,7 +718,7 @@
                                                     }
                                                 }
 
-                                                async function unbanUser(userId, role = 'shop') {
+                                                async function unbanUser(userId, role = globalRole) {
                                                     const result = await Swal.fire({
                                                         title: 'Xác nhận unban?',
                                                         text: 'Shop sẽ được hoạt động lại bình thường!',
@@ -746,7 +747,7 @@
                                                 }
 
                                                 // ======================= BALANCE ======================= 
-                                                function openBalanceModal(userId, email, role = 'shop') {
+                                                function openBalanceModal(userId, email, role = globalRole) {
                                                     document.getElementById('balance-user-id').value = userId;
                                                     document.getElementById('balance-user-email').value = email;
                                                     document.getElementById('balance-user-role').value = role; // 👈 ensure có input này
@@ -781,7 +782,7 @@
 
                                                 async function submitBalance() {
                                                     const userId = document.getElementById('balance-user-id').value;
-                                                    const role = document.getElementById('balance-user-role').value || 'shop'; // 👈 lấy role
+                                                    const role = document.getElementById('balance-user-role').value || globalRole; // 👈 lấy role
                                                     const amount = parseMoneyInput('balance-amount');
 
                                                     if (isNaN(amount)) {
@@ -917,7 +918,7 @@
                                                     }
                                                     async function fetchUserStats() {
                                                         try {
-                                                            const res = await fetch("/api/admin/shops/stats");
+                                                            const res = await fetch(`/api/admin/bulk/stats?role=${globalRole}`); 
                                                             const {
                                                                 success,
                                                                 data
@@ -964,7 +965,7 @@
                                                 
                                                 async function handleBulkAction() {
                                                     const action = document.getElementById('bulk-action-select').value;
-                                                    const role = 'shop'; // 👈 mặc định role = user cho trang này
+                                                    const role = globalRole; // 👈 mặc định role = user cho trang này
 
                                                     if (!action) {
                                                         Swal.fire("Thông báo", "Vui lòng chọn hành động Ban hoặc Unban!", "warning");

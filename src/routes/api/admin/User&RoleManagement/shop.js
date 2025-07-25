@@ -6,6 +6,4 @@ const router = express.Router();
 
 router.get("/logs", shopController.getAllLogsAffectingShop);
 
-router.get("/stats", shopController.getStats);
-
 export default router;

@@ -12,6 +12,7 @@ export default {
       const users = await User.find({ role: "user" });
       res.render("admin/User&RoleManagement/userM", {
         users: multipleMongooseToObject(users),
+        role: "user",
         title: "Quản lý Người dùng",
         layout: false,
         url: req.originalUrl,
