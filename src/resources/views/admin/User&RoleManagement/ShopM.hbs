@@ -165,6 +165,16 @@
                                                     <i class="fa-brands fa-searchengin position-absolute m-2"></i>
                                                     <input type="text" id="search-input" class="form-control form-control-solid w-250px ps-12" placeholder="Tìm kiếm tên, email...">
                                                 </div>
+
+                                                <!-- Multi Ban/Unban -->
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <select id="bulk-action-select" class="form-select form-select-sm w-150px">
+                                                        <option value="">-- Hành động --</option>
+                                                        <option value="ban">Ban</option>
+                                                        <option value="unban">Unban</option>
+                                                    </select>
+                                                    <button class="btn btn-sm btn-danger" onclick="handleBulkAction()">Thực hiện</button>
+                                                </div>
                                             </div>
                                             <!-- Sắp xếp & Lọc trạng thái -->
                                             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
@@ -340,17 +350,17 @@
                                                                                     <i class="fa-regular fa-rectangle-list me-2"></i> Show </a>
                                                                             </div>
                                                                             <div class="menu-item px-3">
-                                                                                <a href="javascript:void(0)" class="menu-link px-3" data-user-id="{{_id}}" onclick="openBalanceModal('{{_id}}', '{{email}}')">
+                                                                                <a href="javascript:void(0)" class="menu-link px-3" data-user-id="{{_id}}" data-role="shop" onclick="openBalanceModal('{{_id}}', '{{email}}' , 'shop')">
                                                                                     <i class="fa-solid fa-coins me-2"></i> Balance </a>
                                                                             </div>
                                                                             {{#if isBanned}}
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-success" onclick="unbanUser('{{_id}}')">
+                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-success" data-role="shop" onclick="unbanUser('{{_id}}' , 'shop')">
                                                                                         <i class="fa-solid fa-thumbs-up me-2"></i> Unban </a>
                                                                                 </div>
                                                                             {{else}}
                                                                                 <div class="menu-item px-3">
-                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-danger" onclick="banUser('{{_id}}')">
+                                                                                    <a href="javascript:void(0)" class="menu-link px-3 text-danger" data-role="shop" onclick="banUser('{{_id}}' , 'shop')">
                                                                                         <i class="fa-solid fa-thumbs-down me-2"></i> Ban </a>
                                                                                 </div>
                                                                             {{/if}}
@@ -479,6 +489,8 @@
                                                         </div>
                                                         <div class="modal-body">
                                                             <input type="hidden" id="balance-user-id" />
+                                                            <input type="hidden" id="balance-user-role">
+
                                                             <div class="mb-3">
                                                                 <label>Email shop:</label>
                                                                 <input type="text" id="balance-user-email" class="form-control" disabled />
@@ -675,8 +687,9 @@
                                                     // Gắn hàm global để gọi từ HTML onclick
                                                     window.setRecordLimit = setRecordLimit;
                                                 });
+                                                
                                                 // ======================= BAN / UNBAN =======================
-                                                async function banUser(userId) {
+                                                async function banUser(userId, role = 'shop') {
                                                     const result = await Swal.fire({
                                                         title: 'Xác nhận ban?',
                                                         text: 'Shop sẽ bị chặn khỏi hệ thống!',
@@ -685,26 +698,26 @@
                                                         confirmButtonText: 'Ban',
                                                         cancelButtonText: 'Hủy'
                                                     });
+
                                                     if (result.isConfirmed) {
                                                         try {
-                                                            const response = await fetch(`/api/admin/shops/${userId}/ban`, {
-                                                                method: 'POST',
-                                                                headers: {
-                                                                    'Content-Type': 'application/json'
-                                                                }
+                                                            const response = await fetch(`/api/admin/bulk/ban/${userId}?role=${role}`, {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' }
                                                             });
                                                             const data = await response.json();
                                                             if (data.success) {
-                                                                Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
+                                                            Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
                                                             } else {
-                                                                Swal.fire('Thất bại', data.message || 'Không thể ban Shop.', 'error');
+                                                            Swal.fire('Thất bại', data.message || 'Không thể ban Shop.', 'error');
                                                             }
                                                         } catch (err) {
                                                             Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
                                                         }
                                                     }
                                                 }
-                                                async function unbanUser(userId) {
+
+                                                async function unbanUser(userId, role = 'shop') {
                                                     const result = await Swal.fire({
                                                         title: 'Xác nhận unban?',
                                                         text: 'Shop sẽ được hoạt động lại bình thường!',
@@ -713,36 +726,39 @@
                                                         confirmButtonText: 'Unban',
                                                         cancelButtonText: 'Hủy'
                                                     });
+
                                                     if (result.isConfirmed) {
                                                         try {
-                                                            const response = await fetch(`/api/admin/shops/${userId}/unban`, {
-                                                                method: 'POST',
-                                                                headers: {
-                                                                    'Content-Type': 'application/json'
-                                                                }
+                                                            const response = await fetch(`/api/admin/bulk/unban/${userId}?role=${role}`, {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' }
                                                             });
                                                             const data = await response.json();
                                                             if (data.success) {
-                                                                Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
+                                                            Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
                                                             } else {
-                                                                Swal.fire('Thất bại', data.message || 'Không thể unban Shop.', 'error');
+                                                            Swal.fire('Thất bại', data.message || 'Không thể unban Shop.', 'error');
                                                             }
                                                         } catch (err) {
                                                             Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
                                                         }
                                                     }
                                                 }
-                                                // ======================= BALANCE =======================
-                                                function openBalanceModal(userId, email) {
+
+                                                // ======================= BALANCE ======================= 
+                                                function openBalanceModal(userId, email, role = 'shop') {
                                                     document.getElementById('balance-user-id').value = userId;
                                                     document.getElementById('balance-user-email').value = email;
+                                                    document.getElementById('balance-user-role').value = role; // 👈 ensure có input này
                                                     document.getElementById('balance-amount').value = '';
+
                                                     const modal = new bootstrap.Modal(document.getElementById('balanceModal'));
                                                     modal.show();
+
                                                     setTimeout(() => {
                                                         document.getElementById('balance-amount').focus();
                                                     }, 300);
-                                                }
+                                                    }
 
                                                 function formatMoneyInput(input) {
                                                     let value = input.value.replace(/,/g, '');
@@ -762,22 +778,28 @@
                                                         submitBalance();
                                                     }
                                                 }
+
                                                 async function submitBalance() {
                                                     const userId = document.getElementById('balance-user-id').value;
+                                                    const role = document.getElementById('balance-user-role').value || 'shop'; // 👈 lấy role
                                                     const amount = parseMoneyInput('balance-amount');
+
                                                     if (isNaN(amount)) {
                                                         return Swal.fire('Lỗi', 'Vui lòng nhập số tiền hợp lệ!', 'error');
                                                     }
+
                                                     try {
-                                                        const res = await fetch(`/api/admin/shops/${userId}/balance`, {
+                                                        const res = await fetch(`/api/admin/bulk/balance/${userId}`, {
                                                             method: 'POST',
                                                             headers: {
                                                                 'Content-Type': 'application/json'
                                                             },
                                                             body: JSON.stringify({
-                                                                amount
+                                                                amount,
+                                                                role // 👈 gửi role
                                                             })
                                                         });
+
                                                         const result = await res.json();
                                                         if (result.success) {
                                                             const modal = bootstrap.Modal.getInstance(document.getElementById('balanceModal'));
@@ -787,9 +809,10 @@
                                                             Swal.fire('Lỗi', result.message || 'Có lỗi xảy ra', 'error');
                                                         }
                                                     } catch (err) {
-                                                        Swal.fire('Lỗi', err.message, 'error');
+                                                        Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
                                                     }
                                                 }
+ 
                                                 document.addEventListener("DOMContentLoaded", () => {
                                                     const table = document.querySelector("#kt_ecommerce_products_table");
                                                     const tbody = table.querySelector("tbody");
@@ -938,6 +961,76 @@
                                                     // Gọi khi trang load
                                                     fetchUserStats();
                                                 });
+                                                
+                                                async function handleBulkAction() {
+                                                    const action = document.getElementById('bulk-action-select').value;
+                                                    const role = 'shop'; // 👈 mặc định role = user cho trang này
+
+                                                    if (!action) {
+                                                        Swal.fire("Thông báo", "Vui lòng chọn hành động Ban hoặc Unban!", "warning");
+                                                        return;
+                                                    }
+
+                                                    const checkboxes = document.querySelectorAll('tbody .form-check-input:checked');
+                                                    if (checkboxes.length === 0) {
+                                                        Swal.fire("Thông báo", "Vui lòng chọn ít nhất một Shop!", "warning");
+                                                        return;
+                                                    }
+
+                                                    // Lấy danh sách id + trạng thái
+                                                    const ids = [];
+                                                    const statuses = [];
+
+                                                    checkboxes.forEach(cb => {
+                                                        const row = cb.closest('tr');
+                                                        const status = row.querySelector('td:nth-child(7) .badge').textContent.trim().toLowerCase();
+                                                        statuses.push(status);
+                                                        ids.push(cb.value);
+                                                    });
+
+                                                    // Kiểm tra tất cả trạng thái giống nhau
+                                                    const allSameStatus = statuses.every(s => s === statuses[0]);
+                                                    if (!allSameStatus) {
+                                                        Swal.fire("Lỗi", "Chỉ có thể thực hiện nếu tất cả Shop cùng trạng thái!", "error");
+                                                        return;
+                                                    }
+
+                                                    // Kiểm tra hành động hợp lệ
+                                                    if (action === "ban" && statuses[0] !== "active") {
+                                                        return Swal.fire("Lỗi", "Chỉ có thể ban Shop đang active!", "error");
+                                                    }
+
+                                                    if (action === "unban" && statuses[0] !== "banned") {
+                                                        return Swal.fire("Lỗi", "Chỉ có thể unban Shop đang bị ban!", "error");
+                                                    }
+
+                                                    const confirm = await Swal.fire({
+                                                        title: `Xác nhận ${action === "ban" ? "ban" : "unban"} ${ids.length} Shop?`,
+                                                        icon: "question",
+                                                        showCancelButton: true,
+                                                        confirmButtonText: "Đồng ý",
+                                                        cancelButtonText: "Huỷ bỏ"
+                                                    });
+
+                                                    if (!confirm.isConfirmed) return;
+
+                                                    try {
+                                                        const response = await fetch(`/api/admin/bulk/multi-${action}`, {
+                                                            method: "POST",
+                                                            headers: { "Content-Type": "application/json" },
+                                                            body: JSON.stringify({ ids, role }) // 👈 gửi kèm role
+                                                        });
+
+                                                        const resData = await response.json();
+                                                        if (resData.success) {
+                                                            Swal.fire("Thành công", resData.message, "success").then(() => location.reload());
+                                                        } else {
+                                                            throw new Error(resData.message);
+                                                        }
+                                                    } catch (err) {
+                                                        Swal.fire("Lỗi", err.message || "Có lỗi xảy ra", "error");
+                                                    }
+                                                }
                                             </script>
                                         </div>
                                         <!--end::Card body-->

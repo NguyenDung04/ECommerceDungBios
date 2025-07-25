@@ -3,8 +3,6 @@ import RolePermissionController from "../../../../app/controllers/api/admin/User
 
 const router = express.Router();
 
-router.get("/", RolePermissionController.getAllRoles);
-
 router.get("/logs", RolePermissionController.getAllLogsAffectingAdmin);
 
 router.get("/stats", RolePermissionController.getStats);

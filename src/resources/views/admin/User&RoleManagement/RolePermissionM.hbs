@@ -196,6 +196,15 @@
                                                     <i class="fa-brands fa-searchengin position-absolute m-2"></i>
                                                     <input type="text" id="search-input" class="form-control form-control-solid w-250px ps-12" placeholder="Tìm kiếm tên, email...">
                                                 </div>
+                                                <!-- Multi Ban/Unban -->
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <select id="bulk-action-select" class="form-select form-select-sm w-150px">
+                                                        <option value="">-- Hành động --</option>
+                                                        <option value="ban">Ban</option>
+                                                        <option value="unban">Unban</option>
+                                                    </select>
+                                                    <button class="btn btn-sm btn-danger" onclick="handleBulkAction()">Thực hiện</button>
+                                                </div>
                                             </div>
                                             <!-- Sắp xếp & Lọc trạng thái -->
                                             <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
@@ -310,7 +319,7 @@
                                                         </thead>
                                                         <tbody class="fw-semibold text-gray-600 text-center">
                                                             {{#each userAll}}
-                                                            <tr>
+                                                            <tr data-role="{{role}}">
                                                                 <td>
                                                                     <div class="form-check form-check-sm form-check-custom form-check-solid">
                                                                         <input class="form-check-input" type="checkbox" value="{{_id}}">
@@ -338,6 +347,7 @@
                                                                     <span class="badge badge-secondary">Other</span>
                                                                     {{/if}}
                                                                 </td>
+                                                                
                                                                 <td>
                                                                     {{#if (eq role "user")}}
                                                                     {{#if (eq level 1)}}
@@ -756,7 +766,6 @@
                                                     }
                                                 });
 
-                                                
                                                 document.addEventListener("DOMContentLoaded", () => {
                                                     const tableBody = document.querySelector("#kt_ecommerce_products_table tbody");
                                                     const allRows = Array.from(tableBody.querySelectorAll("tr"));
@@ -831,163 +840,160 @@
                                                 });
                                                 
                                                 // ======================= BAN =======================
-                                                      async function banUser(el) {
-                                                      const userId = el.dataset.userId;
-                                                      const role = el.dataset.userRole;
-                                                
-                                                      if (!userId || !role || !['user', 'shop', 'admin'].includes(role)) {
-                                                         return Swal.fire('Lỗi', 'Role không hợp lệ hoặc thiếu ID.', 'error');
-                                                      }
-                                                
-                                                      const result = await Swal.fire({
-                                                         title: 'Xác nhận ban?',
-                                                         text: 'Tài khoản sẽ bị chặn khỏi hệ thống!',
-                                                         icon: 'warning',
-                                                         showCancelButton: true,
-                                                         confirmButtonText: 'Ban',
-                                                         cancelButtonText: 'Hủy'
-                                                      });
-                                                
-                                                      if (!result.isConfirmed) return;
-                                                
-                                                      const url = `/api/admin/${role}s/${userId}/ban`;
-                                                
-                                                      try {
-                                                         const response = await fetch(url, {
-                                                            method: 'POST',
-                                                            headers: { 'Content-Type': 'application/json' }
-                                                         });
-                                                         const data = await response.json();
-                                                
-                                                         if (data.success) {
-                                                            Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
-                                                         } else {
-                                                            Swal.fire('Thất bại', data.message || 'Không thể ban người dùng.', 'error');
-                                                         }
-                                                      } catch (err) {
-                                                         Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
-                                                      }
-                                                      }
-                                                
-                                                      // ======================= UNBAN =======================
-                                                      async function unbanUser(el) {
-                                                      const userId = el.dataset.userId;
-                                                      const role = el.dataset.userRole;
-                                                
-                                                      if (!userId || !role || !['user', 'shop', 'admin'].includes(role)) {
-                                                         return Swal.fire('Lỗi', 'Role không hợp lệ hoặc thiếu ID.', 'error');
-                                                      }
-                                                
-                                                      const result = await Swal.fire({
-                                                         title: 'Xác nhận unban?',
-                                                         text: 'Tài khoản sẽ được hoạt động lại bình thường!',
-                                                         icon: 'question',
-                                                         showCancelButton: true,
-                                                         confirmButtonText: 'Unban',
-                                                         cancelButtonText: 'Hủy'
-                                                      });
-                                                
-                                                      if (!result.isConfirmed) return;
-                                                
-                                                      const url = `/api/admin/${role}s/${userId}/unban`;
-                                                
-                                                      try {
-                                                         const response = await fetch(url, {
-                                                            method: 'POST',
-                                                            headers: { 'Content-Type': 'application/json' }
-                                                         });
-                                                         const data = await response.json();
-                                                
-                                                         if (data.success) {
-                                                            Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
-                                                         } else {
-                                                            Swal.fire('Thất bại', data.message || 'Không thể unban người dùng.', 'error');
-                                                         }
-                                                      } catch (err) {
-                                                         Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
-                                                      }
-                                                      }
-                                                
-                                                   // ======================= BALANCE =======================
-                                                   function openBalanceModal(el) {
-                                                   const userId = el.dataset.userId;
-                                                   const role = el.dataset.userRole;
-                                                   const email = el.dataset.userEmail;
-                                                
-                                                   if (!userId || !role) {
-                                                      return Swal.fire('Lỗi', 'Thiếu thông tin người dùng.', 'error');
-                                                   }
-                                                
-                                                   document.getElementById('balance-user-id').value = userId;
-                                                   document.getElementById('balance-user-role').value = role;
-                                                   document.getElementById('balance-user-email').value = email;
-                                                   document.getElementById('balance-amount').value = '';
-                                                
-                                                   const modal = new bootstrap.Modal(document.getElementById('balanceModal'));
-                                                   modal.show();
-                                                
-                                                   setTimeout(() => {
-                                                      document.getElementById('balance-amount').focus();
-                                                   }, 300);
-                                                   }
-                                                
-                                                   function formatMoneyInput(input) {
+                                                async function banUser(el) {
+                                                    const userId = el.dataset.userId;
+                                                    const role = el.dataset.userRole?.toLowerCase();
+
+                                                    console.log("Role: ", role);
+
+
+                                                    if (!userId || !role || !['user', 'shop', 'admin'].includes(role)) {
+                                                        return Swal.fire('Lỗi', 'Role không hợp lệ hoặc thiếu ID.', 'error');
+                                                    }
+
+                                                    const result = await Swal.fire({
+                                                        title: 'Xác nhận ban?',
+                                                        text: 'Tài khoản sẽ bị chặn khỏi hệ thống!',
+                                                        icon: 'warning',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Ban',
+                                                        cancelButtonText: 'Hủy'
+                                                    });
+
+                                                    if (!result.isConfirmed) return;
+
+                                                    try {
+                                                        const response = await fetch(`/api/admin/bulk/ban/${userId}`, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ role }) // Gửi role
+                                                        });
+                                                        const data = await response.json();
+
+                                                        if (data.success) {
+                                                        Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
+                                                        } else {
+                                                        Swal.fire('Thất bại', data.message || 'Không thể ban người dùng.', 'error');
+                                                        }
+                                                    } catch (err) {
+                                                        Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
+                                                    }
+                                                }
+
+                                                // ======================= UNBAN =======================
+                                                async function unbanUser(el) {
+                                                    const userId = el.dataset.userId;
+                                                    const role = el.dataset.userRole?.toLowerCase();
+
+                                                    if (!userId || !role || !['user', 'shop', 'admin'].includes(role)) {
+                                                        return Swal.fire('Lỗi', 'Role không hợp lệ hoặc thiếu ID.', 'error');
+                                                    }
+
+                                                    const result = await Swal.fire({
+                                                        title: 'Xác nhận unban?',
+                                                        text: 'Tài khoản sẽ được hoạt động lại bình thường!',
+                                                        icon: 'question',
+                                                        showCancelButton: true,
+                                                        confirmButtonText: 'Unban',
+                                                        cancelButtonText: 'Hủy'
+                                                    });
+
+                                                    if (!result.isConfirmed) return;
+
+                                                    try {
+                                                        const response = await fetch(`/api/admin/bulk/unban/${userId}`, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ role }) // Gửi role
+                                                        });
+                                                        const data = await response.json();
+
+                                                        if (data.success) {
+                                                        Swal.fire('Thành công!', data.message, 'success').then(() => location.reload());
+                                                        } else {
+                                                        Swal.fire('Thất bại', data.message || 'Không thể unban người dùng.', 'error');
+                                                        }
+                                                    } catch (err) {
+                                                        Swal.fire('Lỗi', err.message || 'Lỗi khi gọi API', 'error');
+                                                    }
+                                                }
+
+                                                // ======================= BALANCE =======================
+                                                function openBalanceModal(el) {
+                                                    const userId = el.dataset.userId;
+                                                    const role = el.dataset.userRole;
+                                                    const email = el.dataset.userEmail;
+
+                                                    if (!userId || !role) {
+                                                        return Swal.fire('Lỗi', 'Thiếu thông tin người dùng.', 'error');
+                                                    }
+
+                                                    document.getElementById('balance-user-id').value = userId;
+                                                    document.getElementById('balance-user-role').value = role;
+                                                    document.getElementById('balance-user-email').value = email;
+                                                    document.getElementById('balance-amount').value = '';
+
+                                                    const modal = new bootstrap.Modal(document.getElementById('balanceModal'));
+                                                    modal.show();
+
+                                                    setTimeout(() => {
+                                                        document.getElementById('balance-amount').focus();
+                                                    }, 300);
+                                                }
+
+                                                function formatMoneyInput(input) {
                                                    let value = input.value.replace(/,/g, '');
                                                    if (isNaN(value)) return;
                                                    const number = parseFloat(value);
                                                    input.value = number.toLocaleString('en-US');
                                                    }
                                                 
-                                                   function parseMoneyInput(inputId) {
+                                                function parseMoneyInput(inputId) {
                                                    const raw = document.getElementById(inputId).value.replace(/,/g, '');
                                                    return parseFloat(raw);
                                                    }
                                                 
-                                                   function handleBalanceKey(e) {
+                                                function handleBalanceKey(e) {
                                                    if (e.key === 'Enter') {
                                                       e.preventDefault();
                                                       submitBalance();
                                                    }
                                                    }
                                                 
-                                                   async function submitBalance() {
-                                                   const userId = document.getElementById('balance-user-id').value;
-                                                   const role = document.getElementById('balance-user-role').value;
-                                                   const amount = parseMoneyInput('balance-amount');
-                                                
-                                                   if (!userId || !role || !['user', 'shop', 'admin'].includes(role)) {
-                                                      return Swal.fire('Lỗi', 'Thông tin không hợp lệ!', 'error');
-                                                   }
-                                                
-                                                   if (isNaN(amount)) {
-                                                      return Swal.fire('Lỗi', 'Vui lòng nhập số tiền hợp lệ!', 'error');
-                                                   }
-                                                
-                                                   const url = `/api/admin/${role}s/${userId}/balance`;
-                                                
-                                                   try {
-                                                      const res = await fetch(url, {
-                                                         method: 'POST',
-                                                         headers: { 'Content-Type': 'application/json' },
-                                                         body: JSON.stringify({ amount })
-                                                      });
-                                                
-                                                      const result = await res.json();
-                                                
-                                                      if (result.success) {
-                                                         const modal = bootstrap.Modal.getInstance(document.getElementById('balanceModal'));
-                                                         modal.hide();
-                                                         Swal.fire('Thành công', result.message, 'success').then(() => location.reload());
-                                                      } else {
-                                                         Swal.fire('Lỗi', result.message || 'Có lỗi xảy ra', 'error');
-                                                      }
-                                                   } catch (err) {
-                                                      Swal.fire('Lỗi', err.message, 'error');
-                                                   }
-                                                   }
-                                                
-                                                
-                                                
+                                                async function submitBalance() {
+                                                    const userId = document.getElementById('balance-user-id').value;
+                                                    const role = document.getElementById('balance-user-role').value;
+                                                    const amount = parseMoneyInput('balance-amount');
+
+                                                    if (!userId || !role || !['user', 'shop', 'admin'].includes(role)) {
+                                                        return Swal.fire('Lỗi', 'Thông tin không hợp lệ!', 'error');
+                                                    }
+
+                                                    if (isNaN(amount)) {
+                                                        return Swal.fire('Lỗi', 'Vui lòng nhập số tiền hợp lệ!', 'error');
+                                                    }
+
+                                                    try {
+                                                        const res = await fetch(`/api/admin/bulk/balance/${userId}`, {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ amount, role }) // 👈 thêm role vào body
+                                                        });
+
+                                                        const result = await res.json();
+
+                                                        if (result.success) {
+                                                        const modal = bootstrap.Modal.getInstance(document.getElementById('balanceModal'));
+                                                        modal.hide();
+                                                        Swal.fire('Thành công', result.message, 'success').then(() => location.reload());
+                                                        } else {
+                                                        Swal.fire('Lỗi', result.message || 'Có lỗi xảy ra', 'error');
+                                                        }
+                                                    } catch (err) {
+                                                        Swal.fire('Lỗi', err.message, 'error');
+                                                    }
+                                                }
+
                                                 document.addEventListener("DOMContentLoaded", () => {
                                                     const table = document.querySelector("#kt_ecommerce_products_table");
                                                     const tbody = table.querySelector("tbody");
@@ -1166,6 +1172,87 @@
                                                     // Gọi khi trang load
                                                     fetchUserStats();
                                                 });
+
+                                                async function handleBulkAction() {
+                                                    const action = document.getElementById('bulk-action-select').value;
+
+                                                    if (!action) {
+                                                        Swal.fire("Thông báo", "Vui lòng chọn hành động Ban hoặc Unban!", "warning");
+                                                        return;
+                                                    }
+
+                                                    const checkboxes = document.querySelectorAll('tbody .form-check-input:checked');
+                                                    if (checkboxes.length === 0) {
+                                                        Swal.fire("Thông báo", "Vui lòng chọn ít nhất một tài khoản!", "warning");
+                                                        return;
+                                                    }
+
+                                                    const ids = [];
+                                                    const statuses = [];
+                                                    const roles = new Set();
+
+                                                    checkboxes.forEach(cb => {
+                                                        const row = cb.closest('tr');
+                                                        const statusText = row.querySelector('td:nth-child(8) .badge')?.textContent?.trim().toLowerCase(); // Cột Status
+                                                        const role = row.dataset.role?.toLowerCase();
+
+                                                        if (!role) {
+                                                            console.warn("Thiếu role tại hàng:", row);
+                                                        }
+
+                                                        statuses.push(statusText);
+                                                        roles.add(role);
+                                                        ids.push(cb.value);
+                                                    });
+
+                                                    if (roles.size !== 1) {
+                                                        Swal.fire("Lỗi", "Chỉ thực hiện nếu tất cả tài khoản cùng loại (role)!", "error");
+                                                        return;
+                                                    }
+
+                                                    const role = [...roles][0];
+
+                                                    const allSameStatus = statuses.every(s => s === statuses[0]);
+                                                    if (!allSameStatus) {
+                                                        Swal.fire("Lỗi", "Chỉ thực hiện nếu tất cả cùng trạng thái!", "error");
+                                                        return;
+                                                    }
+
+                                                    if (action === "ban" && statuses[0] !== "active") {
+                                                        return Swal.fire("Lỗi", "Chỉ có thể ban tài khoản đang active!", "error");
+                                                    }
+
+                                                    if (action === "unban" && statuses[0] !== "banned") {
+                                                        return Swal.fire("Lỗi", "Chỉ có thể unban tài khoản đang bị ban!", "error");
+                                                    }
+
+                                                    const confirm = await Swal.fire({
+                                                        title: `Xác nhận ${action} ${ids.length} ${role}?`,
+                                                        icon: "question",
+                                                        showCancelButton: true,
+                                                        confirmButtonText: "Đồng ý",
+                                                        cancelButtonText: "Huỷ bỏ"
+                                                    });
+
+                                                    if (!confirm.isConfirmed) return; 
+
+                                                    try {
+                                                        const response = await fetch(`/api/admin/bulk/multi-${action}`, {
+                                                            method: "POST",
+                                                            headers: { "Content-Type": "application/json" },
+                                                            body: JSON.stringify({ ids, role })
+                                                        });
+
+                                                        const resData = await response.json();
+                                                        if (resData.success) {
+                                                            Swal.fire("Thành công", resData.message, "success").then(() => location.reload());
+                                                        } else {
+                                                            throw new Error(resData.message);
+                                                        }
+                                                    } catch (err) {
+                                                        Swal.fire("Lỗi", err.message || "Có lỗi xảy ra", "error");
+                                                    }
+                                                } 
                                             </script>
                                         </div>
                                         <!--end::Card body-->
